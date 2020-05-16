@@ -14,6 +14,7 @@ const THEME: string = 'github';
 const App = () => {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
+  const [validJson, setValidJson] = useState(true);
   const [annotations, setAnnotations] = useState([] as IAnnotation[]);
 
   useEffect(() => {
@@ -22,6 +23,7 @@ const App = () => {
         const typed = getTypeDefinitions(input);
         setAnnotations([]);
         setOutput(typed);
+        setValidJson(true);
       } catch (e) {
         const message = e.message;
         const matches = message.match(/position (\d+)/);
@@ -36,9 +38,11 @@ const App = () => {
         }
 
         setAnnotations([{row: row, column: 0, text: message, type: 'error'}]);
+        setValidJson(false);
       }
     } else {
       setAnnotations([]);
+      setValidJson(true);
     }
   }, [input]);
 
@@ -48,42 +52,46 @@ const App = () => {
         <h1>Convert JSON to Python type definitions</h1>
       </div>
       <div className="editors">
-        <AceEditor
-          placeholder="Add JSON"
-          height="calc(100vh - 50px)"
-          width="50vw"
-          annotations={annotations}
-          mode="json"
-          theme={THEME}
-          name="aceInput"
-          onChange={value => setInput(value)}
-          fontSize={16}
-          showPrintMargin={true}
-          showGutter={true}
-          highlightActiveLine={true}
-          value={input}
-          setOptions={{
-            showLineNumbers: true,
-            tabSize: 2,
-          }}
-        />
-        <AceEditor
-          mode="python"
-          theme={THEME}
-          height="calc(100vh - 50px)"
-          width="50vw"
-          name="aceOutput"
-          fontSize={16}
-          showPrintMargin={true}
-          showGutter={true}
-          highlightActiveLine={false}
-          readOnly={true}
-          value={output}
-          setOptions={{
-            showLineNumbers: true,
-            tabSize: 2,
-          }}
-        />
+        <div className={validJson ? '' : 'error'}>
+          <AceEditor
+            placeholder="Add JSON"
+            height="calc(100vh - 50px)"
+            width="50vw"
+            annotations={annotations}
+            mode="json"
+            theme={THEME}
+            name="aceInput"
+            onChange={value => setInput(value)}
+            fontSize={16}
+            showPrintMargin={true}
+            showGutter={true}
+            highlightActiveLine={true}
+            value={input}
+            setOptions={{
+              showLineNumbers: true,
+              tabSize: 2,
+            }}
+          />
+        </div>
+        <div>
+          <AceEditor
+            mode="python"
+            theme={THEME}
+            height="calc(100vh - 50px)"
+            width="50vw"
+            name="aceOutput"
+            fontSize={16}
+            showPrintMargin={true}
+            showGutter={true}
+            highlightActiveLine={false}
+            readOnly={true}
+            value={output}
+            setOptions={{
+              showLineNumbers: true,
+              tabSize: 2,
+            }}
+          />
+        </div>
       </div>
     </>
   );
