@@ -1,0 +1,14 @@
+.editors {
+  display: flex;
+  max-width: 1630px;
+}
+
+.header {
+  height: 50px;
+}
+
+.header > h1 {
+  display: inline-block;
+  margin-top: 6px;
+  margin-left: 20px;
+}
