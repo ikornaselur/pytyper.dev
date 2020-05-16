@@ -17,20 +17,22 @@ const EXAMPLE: string = `{
   "string": "string",
   "list_single_type": ["a", "b", "c"],
   "list_mixed_type": ["1", 2, 3.0],
+  "optional_type": [1, null],
   "nested_dict": {
     "number": 1,
-    "string": "value"
+    "string": "value",
+    "maybe": "foo"
   },
   "same_nested_dict": {
     "number": 2,
-    "string": "different value"
+    "string": "different value",
+    "maybe": null
   },
   "multipe_levels": {
     "level2": {
-      "level3": {
-        "number": 3,
-        "string": "more values"
-      }
+      "number": 2,
+      "string": "more values",
+      "maybe": null
     }
   },
   "nested_invalid": { "numeric-id": 123, "from": "far away" },
