@@ -7,6 +7,8 @@ import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/theme-github';
 
+import {useWindowSize} from './hooks';
+
 import './App.css';
 
 const THEME: string = 'github';
@@ -74,17 +76,27 @@ const App = () => {
     }
   }, [input]);
 
+  const windowSize = useWindowSize();
+
+  let editorHeight = windowSize.height - 52;
+  let editorWidth = windowSize.width / 2;
+
+  if (windowSize.width < 1000) {
+    editorHeight = windowSize.height / 2 - 26;
+    editorWidth = windowSize.width;
+  }
+
   return (
     <>
       <div className="header">
         <h1>Convert JSON to Python type definitions</h1>
       </div>
-      <div className="editors">
+      <div className="editors-wrapper">
         <div className={validJson ? '' : 'error'}>
           <AceEditor
             placeholder="Add JSON"
-            height="calc(100vh - 50px)"
-            width="50vw"
+            height={`${editorHeight}px`}
+            width={`${editorWidth}px`}
             annotations={annotations}
             mode="json"
             theme={THEME}
@@ -103,10 +115,10 @@ const App = () => {
         </div>
         <div>
           <AceEditor
+            height={`${editorHeight}px`}
+            width={`${editorWidth}px`}
             mode="python"
             theme={THEME}
-            height="calc(100vh - 50px)"
-            width="50vw"
             name="aceOutput"
             fontSize={16}
             showPrintMargin={true}
