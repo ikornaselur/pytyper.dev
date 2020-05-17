@@ -12,6 +12,7 @@ import {useWindowSize} from './hooks';
 import './App.css';
 
 const THEME: string = 'github';
+const MAX_WIDTH: number = 800;
 
 const EXAMPLE: string = `{
   "number_int": 123,
@@ -81,7 +82,7 @@ const App = () => {
   let editorHeight = windowSize.height - 52;
   let editorWidth = windowSize.width / 2;
 
-  if (windowSize.width < 1000) {
+  if (windowSize.width < MAX_WIDTH) {
     editorHeight = windowSize.height / 2 - 26;
     editorWidth = windowSize.width;
   }
