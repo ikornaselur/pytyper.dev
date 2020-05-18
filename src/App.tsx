@@ -7,12 +7,9 @@ import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/theme-github';
 
-import {useWindowSize} from './hooks';
-
 import './App.css';
 
 const THEME: string = 'github';
-const MAX_WIDTH: number = 800;
 
 const EXAMPLE: string = `{
   "number_int": 123,
@@ -77,16 +74,6 @@ const App = () => {
     }
   }, [input]);
 
-  const windowSize = useWindowSize();
-
-  let editorHeight = windowSize.height - 52;
-  let editorWidth = windowSize.width / 2;
-
-  if (windowSize.width < MAX_WIDTH) {
-    editorHeight = windowSize.height / 2 - 26;
-    editorWidth = windowSize.width;
-  }
-
   return (
     <>
       <div className="header">
@@ -95,9 +82,10 @@ const App = () => {
       <div className="editors-wrapper">
         <div className={validJson ? '' : 'error'}>
           <AceEditor
+            width=""
+            height=""
             placeholder="Add JSON"
-            height={`${editorHeight}px`}
-            width={`${editorWidth}px`}
+            className="editor"
             annotations={annotations}
             mode="json"
             theme={THEME}
@@ -111,13 +99,15 @@ const App = () => {
             setOptions={{
               showLineNumbers: true,
               tabSize: 2,
+              useWorker: false,
             }}
           />
         </div>
         <div>
           <AceEditor
-            height={`${editorHeight}px`}
-            width={`${editorWidth}px`}
+            width=""
+            height=""
+            className="editor"
             mode="python"
             theme={THEME}
             name="aceOutput"
@@ -130,6 +120,7 @@ const App = () => {
             setOptions={{
               showLineNumbers: true,
               tabSize: 2,
+              useWorker: false,
             }}
           />
         </div>
