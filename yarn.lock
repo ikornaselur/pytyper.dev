@@ -3481,10 +3481,10 @@ detect-port-alt@1.1.6:
     address "^1.0.1"
     debug "^2.6.0"
 
-dict-typer@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/dict-typer/-/dict-typer-0.1.0.tgz#3fb71422c957ae9f42c3f1d9a1937130f317b78c"
-  integrity sha512-grndYg1+ONEFCKhCXSQHXdy1vrGpDEtWjnMpS7FJYmjqbqHKj9iEAXDxzQr/O+AxyOqkr3sYb3VsXuwizB0D8g==
+dict-typer@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/dict-typer/-/dict-typer-0.1.12.tgz#d564566f583a0978a1747814a30e624c66ac1b7b"
+  integrity sha512-tfsBsn7tgz1YcjPwmKQ/GOaFFVEDkbcSB9mgSsbovYOegtiW7Bj11VyBLNc0m9GCW5FbkufxsC3IYsSTk6nAXg==
 
 diff-match-patch@^1.0.4:
   version "1.0.4"
