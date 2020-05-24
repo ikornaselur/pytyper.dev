@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 
 import AceEditor, {IAnnotation} from 'react-ace';
 import {getTypeDefinitions} from 'dict-typer';
+import {createStyles, Theme, useTheme, makeStyles} from '@material-ui/core/styles';
 
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/mode-python';
@@ -38,6 +39,14 @@ const EXAMPLE: string = `{
   "nested_invalid": { "numeric-id": 123, "from": "far away" },
   "optional_items": [1, 2, "3", "4", null, 5, 6, null]
 }`;
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+    },
+  }),
+);
 
 const Editors = () => {
   const [input, setInput] = useState(EXAMPLE);
