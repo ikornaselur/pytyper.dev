@@ -3,12 +3,11 @@ import React, {useState, useEffect} from 'react';
 import AceEditor, {IAnnotation} from 'react-ace';
 import {getTypeDefinitions} from 'dict-typer';
 import {createStyles, Theme, useTheme, makeStyles} from '@material-ui/core/styles';
+import className from 'classnames';
 
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/theme-github';
-
-import styles from './Editors.module.css';
 
 const THEME: string = 'github';
 
@@ -44,11 +43,28 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
+      maxWidth: '1630px',
+      width: '100%',
+      height: '100%',
+      [theme.breakpoints.down('sm')]: {
+        flexDirection: 'column',
+      },
+    },
+    editor: {
+      borderBottom: `1px solid ${theme.palette.primary.dark}`,
+      height: '100%',
+      width: '100%',
+    },
+    error: {
+      background: theme.palette.error.light,
     },
   }),
 );
 
 const Editors = () => {
+  const theme = useTheme();
+  const classes = useStyles(theme);
+
   const [input, setInput] = useState(EXAMPLE);
   const [output, setOutput] = useState('');
   const [validJson, setValidJson] = useState(true);
@@ -84,51 +100,47 @@ const Editors = () => {
   }, [input]);
 
   return (
-    <div className={styles.root}>
-      <div className={validJson ? '' : styles.error}>
-        <AceEditor
-          width=""
-          height=""
-          placeholder="Add JSON"
-          className={styles.editor}
-          annotations={annotations}
-          mode="json"
-          theme={THEME}
-          name="aceInput"
-          onChange={value => setInput(value)}
-          fontSize={16}
-          showPrintMargin={true}
-          showGutter={true}
-          highlightActiveLine={true}
-          value={input}
-          setOptions={{
-            showLineNumbers: true,
-            tabSize: 2,
-            useWorker: false,
-          }}
-        />
-      </div>
-      <div>
-        <AceEditor
-          width=""
-          height=""
-          className={styles.editor}
-          mode="python"
-          theme={THEME}
-          name="aceOutput"
-          fontSize={16}
-          showPrintMargin={true}
-          showGutter={true}
-          highlightActiveLine={false}
-          readOnly={true}
-          value={output}
-          setOptions={{
-            showLineNumbers: true,
-            tabSize: 2,
-            useWorker: false,
-          }}
-        />
-      </div>
+    <div className={classes.root}>
+      <AceEditor
+        width=""
+        height=""
+        placeholder="Add JSON"
+        className={className(classes.editor, {[classes.error]: !validJson})}
+        annotations={annotations}
+        mode="json"
+        theme={THEME}
+        name="aceInput"
+        onChange={value => setInput(value)}
+        fontSize={16}
+        showPrintMargin={true}
+        showGutter={true}
+        highlightActiveLine={true}
+        value={input}
+        setOptions={{
+          showLineNumbers: true,
+          tabSize: 2,
+          useWorker: false,
+        }}
+      />
+      <AceEditor
+        width=""
+        height=""
+        className={classes.editor}
+        mode="python"
+        theme={THEME}
+        name="aceOutput"
+        fontSize={16}
+        showPrintMargin={true}
+        showGutter={true}
+        highlightActiveLine={false}
+        readOnly={true}
+        value={output}
+        setOptions={{
+          showLineNumbers: true,
+          tabSize: 2,
+          useWorker: false,
+        }}
+      />
     </div>
   );
 };
