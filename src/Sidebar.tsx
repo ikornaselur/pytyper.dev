@@ -2,7 +2,6 @@ import React from 'react';
 
 import {createStyles, Theme, useTheme, makeStyles} from '@material-ui/core/styles';
 import {
-  Container,
   Divider,
   Drawer,
   FormControl,
