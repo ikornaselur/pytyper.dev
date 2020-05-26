@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 import {createStyles, Theme, useTheme, makeStyles} from '@material-ui/core/styles';
-import {AppBar, CssBaseline, IconButton, Toolbar, Typography} from '@material-ui/core';
+import {AppBar, Container, IconButton, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
 
 import Editors from './Editors';
@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
+      height: '100vh',
     },
     drawer: {
       [theme.breakpoints.up('sm')]: {
@@ -34,13 +35,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1,
-      width: `calc(100vw - ${drawerWidth}px)`,
-      [theme.breakpoints.up('sm')]: {
-        height: `calc(100vh - 64px)`,
-      },
-      [theme.breakpoints.down('xs')]: {
-        height: `calc(100vh - 56px)`,
-      },
+      width: '100%',
+      height: '100%',
     },
     closeMenuButton: {
       marginRight: 'auto',
@@ -51,7 +47,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const App = () => {
   const theme = useTheme();
-  console.log(theme);
   const classes = useStyles(theme);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -61,7 +56,6 @@ const App = () => {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <AppBar position="fixed" className={classes.appBar} elevation={0}>
         <Toolbar>
           <IconButton
@@ -79,10 +73,10 @@ const App = () => {
         </Toolbar>
       </AppBar>
       <Sidebar open={mobileOpen} toggle={handleDrawerToggle} />
-      <div className={classes.content}>
+      <Container disableGutters={true}>
         <div className={classes.toolbar} />
         <Editors />
-      </div>
+      </Container>
     </div>
   );
 };

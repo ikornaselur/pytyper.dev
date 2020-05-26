@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {createStyles, Theme, useTheme, makeStyles} from '@material-ui/core/styles';
-import {Hidden, Drawer, IconButton, List, ListItem, ListItemText} from '@material-ui/core';
+import {Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemText} from '@material-ui/core';
 import {Close} from '@material-ui/icons';
 
 import {drawerWidth} from './constants';
@@ -40,18 +40,25 @@ interface SidebarProps {
 }
 
 const Sidebar = ({open, toggle}: SidebarProps) => {
-  const dummyCategories = ['Hokusai', 'Hiroshige', 'Utamaro', 'Kuniyoshi', 'Yoshitoshi'];
   const theme = useTheme();
   const classes = useStyles(theme);
 
   const SidebarContent = () => (
     <div>
       <List>
-        {dummyCategories.map(text => (
-          <ListItem button key={text}>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button>
+          <ListItemText primary={'foo'} />
+        </ListItem>
+        <ListItem button>
+          <ListItemText primary={'bar'} />
+        </ListItem>
+        <ListItem button>
+          <ListItemText primary={'Report invalid output'} />
+        </ListItem>
+        <Divider />
+        <ListItem button>
+          <ListItemText primary={'Github'} />
+        </ListItem>
       </List>
     </div>
   );

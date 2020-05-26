@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import {ThemeProvider} from '@material-ui/core/styles';
+import {CssBaseline} from '@material-ui/core';
 
 import PytyperTheme from './theme';
 
@@ -13,6 +14,7 @@ import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
+    <CssBaseline />
     <ThemeProvider theme={PytyperTheme}>
       <App />
     </ThemeProvider>
