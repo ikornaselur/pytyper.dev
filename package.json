@@ -1,12 +1,17 @@
 {
   "name": "pytyper.dev",
+  "homepage": "https://pytyper.dev/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.9.14",
+    "@material-ui/icons": "^4.9.1",
+    "@types/classnames": "^2.2.10",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
-    "dict-typer": "^0.1.12",
+    "classnames": "^2.2.6",
+    "dict-typer": "^0.1.13",
     "react": "^16.13.1",
     "react-ace": "^8.1.0",
     "react-dom": "^16.13.1",

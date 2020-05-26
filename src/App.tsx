@@ -1,131 +1,96 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
-import AceEditor, {IAnnotation} from 'react-ace';
-import {getTypeDefinitions} from 'dict-typer';
+import {createStyles, Theme, useTheme, makeStyles} from '@material-ui/core/styles';
+import {AppBar, Container, IconButton, Toolbar, Typography} from '@material-ui/core';
+import {Menu} from '@material-ui/icons';
 
-import 'ace-builds/src-noconflict/mode-json';
-import 'ace-builds/src-noconflict/mode-python';
-import 'ace-builds/src-noconflict/theme-github';
+import Editors from './Editors';
+import Sidebar from './Sidebar';
+import {drawerWidth} from './constants';
 
-import './App.css';
-
-const THEME: string = 'github';
-
-const EXAMPLE: string = `{
-  "number_int": 123,
-  "number_float": 3.0,
-  "string": "string",
-  "list_single_type": ["a", "b", "c"],
-  "list_mixed_type": ["1", 2, 3.0],
-  "optional_type": [1, null],
-  "nested_dict": {
-    "number": 1,
-    "string": "value",
-    "maybe": "foo"
-  },
-  "same_nested_dict": {
-    "number": 2,
-    "string": "different value",
-    "maybe": null
-  },
-  "multipe_levels": {
-    "level2": {
-      "number": 2,
-      "string": "more values",
-      "maybe": null
-    }
-  },
-  "nested_invalid": { "numeric-id": 123, "from": "far away" },
-  "optional_items": [1, 2, "3", "4", null, 5, 6, null]
-}`;
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+      height: '100vh',
+    },
+    drawer: {
+      [theme.breakpoints.up('sm')]: {
+        width: drawerWidth,
+        flexShrink: 0,
+      },
+    },
+    appBar: {
+      zIndex: theme.zIndex.drawer + 1,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+      [theme.breakpoints.up('sm')]: {
+        display: 'none',
+      },
+    },
+    toolbar: theme.mixins.toolbar,
+    drawerPaper: {
+      width: drawerWidth,
+    },
+    content: {
+      paddingTop: 56,
+      [theme.breakpoints.up('sm')]: {
+        paddingTop: 64,
+      },
+    },
+    closeMenuButton: {
+      marginRight: 'auto',
+      marginLeft: 0,
+    },
+  }),
+);
 
 const App = () => {
-  const [input, setInput] = useState(EXAMPLE);
-  const [output, setOutput] = useState('');
-  const [validJson, setValidJson] = useState(true);
-  const [annotations, setAnnotations] = useState([] as IAnnotation[]);
+  const theme = useTheme();
+  const classes = useStyles(theme);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [showImports, setShowImports] = useState(true);
+  const [forceAlternative, setForceAlternative] = useState(false);
 
-  useEffect(() => {
-    if (input.length > 0) {
-      try {
-        const typed = getTypeDefinitions(input);
-        setAnnotations([]);
-        setOutput(typed);
-        setValidJson(true);
-      } catch (e) {
-        const message = e.message;
-        const matches = message.match(/position (\d+)/);
-
-        let row;
-        if (matches) {
-          const position = parseInt(matches[1]);
-          const rows = input.substring(0, position).split(/\r\n|\r|\n/);
-          row = rows.length - 1;
-        } else {
-          row = 0;
-        }
-
-        setAnnotations([{row: row, column: 0, text: message, type: 'error'}]);
-        setValidJson(false);
-      }
-    } else {
-      setAnnotations([]);
-      setValidJson(true);
-    }
-  }, [input]);
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
   return (
-    <>
-      <div className="header">
-        <h1>Convert JSON to Python type definitions</h1>
-      </div>
-      <div className="editors-wrapper">
-        <div className={validJson ? '' : 'error'}>
-          <AceEditor
-            width=""
-            height=""
-            placeholder="Add JSON"
-            className="editor"
-            annotations={annotations}
-            mode="json"
-            theme={THEME}
-            name="aceInput"
-            onChange={value => setInput(value)}
-            fontSize={16}
-            showPrintMargin={true}
-            showGutter={true}
-            highlightActiveLine={true}
-            value={input}
-            setOptions={{
-              showLineNumbers: true,
-              tabSize: 2,
-              useWorker: false,
-            }}
-          />
-        </div>
-        <div>
-          <AceEditor
-            width=""
-            height=""
-            className="editor"
-            mode="python"
-            theme={THEME}
-            name="aceOutput"
-            fontSize={16}
-            showPrintMargin={true}
-            showGutter={true}
-            highlightActiveLine={false}
-            readOnly={true}
-            value={output}
-            setOptions={{
-              showLineNumbers: true,
-              tabSize: 2,
-              useWorker: false,
-            }}
-          />
-        </div>
-      </div>
-    </>
+    <div className={classes.root}>
+      <AppBar position="fixed" className={classes.appBar} elevation={0}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="Open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            className={classes.menuButton}
+          >
+            <Menu />
+          </IconButton>
+          <Typography variant="h6" noWrap>
+            pytyper: convert JSON to Python type definitions
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Sidebar
+        open={mobileOpen}
+        toggle={handleDrawerToggle}
+        showImports={showImports}
+        toggleShowImports={() => {
+          setShowImports(!showImports);
+        }}
+        forceAlternative={forceAlternative}
+        toggleForceAlternative={() => {
+          setForceAlternative(!forceAlternative);
+        }}
+      />
+      <Container disableGutters={true} className={classes.content}>
+        <Editors showImports={showImports} forceAlternative={forceAlternative} />
+      </Container>
+    </div>
   );
 };
 
