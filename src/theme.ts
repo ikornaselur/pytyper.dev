@@ -11,7 +11,7 @@ const PytyperTheme = createMuiTheme({
       main: '#e8e8e8',
     },
     secondary: {
-      main: '#616161',
+      main: '#00acc1',
     },
     success: {
       light: green[lightShade],

@@ -49,6 +49,8 @@ const App = () => {
   const theme = useTheme();
   const classes = useStyles(theme);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [showImports, setShowImports] = useState(true);
+  const [showAlternative, setshowAlternative] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -72,10 +74,21 @@ const App = () => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Sidebar open={mobileOpen} toggle={handleDrawerToggle} />
+      <Sidebar
+        open={mobileOpen}
+        toggle={handleDrawerToggle}
+        showImports={showImports}
+        toggleShowImports={() => {
+          setShowImports(!showImports);
+        }}
+        showAlternative={showAlternative}
+        toggleshowAlternative={() => {
+          setshowAlternative(!showAlternative);
+        }}
+      />
       <Container disableGutters={true}>
         <div className={classes.toolbar} />
-        <Editors />
+        <Editors showImports={showImports} showAlternative={showAlternative} />
       </Container>
     </div>
   );

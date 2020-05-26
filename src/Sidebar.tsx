@@ -1,7 +1,18 @@
 import React from 'react';
 
 import {createStyles, Theme, useTheme, makeStyles} from '@material-ui/core/styles';
-import {Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemText} from '@material-ui/core';
+import {
+  Container,
+  Divider,
+  Drawer,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
+  Hidden,
+  IconButton,
+  Switch,
+} from '@material-ui/core';
 import {Close} from '@material-ui/icons';
 
 import {drawerWidth} from './constants';
@@ -31,35 +42,50 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: 'auto',
       marginLeft: 0,
     },
+    options: {
+      padding: '16px 8px 0 8px',
+    },
   }),
 );
 
-interface SidebarProps {
+type SidebarProps = {
   open: boolean;
   toggle: () => void;
-}
+  showImports: boolean;
+  toggleShowImports: () => void;
+  showAlternative: boolean;
+  toggleshowAlternative: () => void;
+};
 
-const Sidebar = ({open, toggle}: SidebarProps) => {
+const Sidebar = ({
+  open,
+  toggle,
+  showImports,
+  toggleShowImports,
+  showAlternative,
+  toggleshowAlternative,
+}: SidebarProps) => {
   const theme = useTheme();
   const classes = useStyles(theme);
 
-  const SidebarContent = () => (
+  const sidebarContent = (
     <div>
-      <List>
-        <ListItem button>
-          <ListItemText primary={'foo'} />
-        </ListItem>
-        <ListItem button>
-          <ListItemText primary={'bar'} />
-        </ListItem>
-        <ListItem button>
-          <ListItemText primary={'Report invalid output'} />
-        </ListItem>
-        <Divider />
-        <ListItem button>
-          <ListItemText primary={'Github'} />
-        </ListItem>
-      </List>
+      <FormControl className={classes.options}>
+        <FormLabel component="legend" focused={false}>
+          Options
+        </FormLabel>
+        <FormGroup>
+          <FormControlLabel
+            control={<Switch checked={showImports} onClick={toggleShowImports} />}
+            label="Show Imports"
+          />
+          <FormControlLabel
+            control={<Switch checked={showAlternative} onChange={toggleshowAlternative} />}
+            label="Alternative"
+          />
+        </FormGroup>
+      </FormControl>
+      <Divider />
     </div>
   );
 
@@ -81,7 +107,7 @@ const Sidebar = ({open, toggle}: SidebarProps) => {
           <IconButton onClick={toggle} className={classes.closeMenuButton}>
             <Close />
           </IconButton>
-          <SidebarContent />
+          {sidebarContent}
         </Drawer>
       </Hidden>
       <Hidden xsDown implementation="css">
@@ -93,7 +119,7 @@ const Sidebar = ({open, toggle}: SidebarProps) => {
           }}
         >
           <div className={classes.toolbar} />
-          <SidebarContent />
+          {sidebarContent}
         </Drawer>
       </Hidden>
     </nav>

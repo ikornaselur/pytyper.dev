@@ -11,34 +11,6 @@ import 'ace-builds/src-noconflict/theme-github';
 
 const THEME: string = 'github';
 
-const EXAMPLE: string = `{
-  "number_int": 123,
-  "number_float": 3.0,
-  "string": "string",
-  "list_single_type": ["a", "b", "c"],
-  "list_mixed_type": ["1", 2, 3.0],
-  "optional_type": [1, null],
-  "nested_dict": {
-    "number": 1,
-    "string": "value",
-    "maybe": "foo"
-  },
-  "same_nested_dict": {
-    "number": 2,
-    "string": "different value",
-    "maybe": null
-  },
-  "multipe_levels": {
-    "level2": {
-      "number": 2,
-      "string": "more values",
-      "maybe": null
-    }
-  },
-  "nested_invalid": { "numeric-id": 123, "from": "far away" },
-  "optional_items": [1, 2, "3", "4", null, 5, 6, null]
-}`;
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -61,7 +33,12 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const Editors = () => {
+type EditorProps = {
+  showImports: boolean;
+  showAlternative: boolean;
+};
+
+const Editors = ({showImports, showAlternative}: EditorProps) => {
   const theme = useTheme();
   const classes = useStyles(theme);
 
@@ -73,7 +50,7 @@ const Editors = () => {
   useEffect(() => {
     if (input.length > 0) {
       try {
-        const typed = getTypeDefinitions(input);
+        const typed = getTypeDefinitions(input, {showImports});
         setAnnotations([]);
         setOutput(typed);
         setValidJson(true);
@@ -97,7 +74,7 @@ const Editors = () => {
       setAnnotations([]);
       setValidJson(true);
     }
-  }, [input]);
+  }, [showImports, input]);
 
   return (
     <div className={classes.root}>
@@ -146,3 +123,31 @@ const Editors = () => {
 };
 
 export default Editors;
+
+const EXAMPLE: string = `{
+  "number_int": 123,
+  "number_float": 3.0,
+  "string": "string",
+  "list_single_type": ["a", "b", "c"],
+  "list_mixed_type": ["1", 2, 3.0],
+  "optional_type": [1, null],
+  "nested_dict": {
+    "number": 1,
+    "string": "value",
+    "maybe": "foo"
+  },
+  "same_nested_dict": {
+    "number": 2,
+    "string": "different value",
+    "maybe": null
+  },
+  "multipe_levels": {
+    "level2": {
+      "number": 2,
+      "string": "more values",
+      "maybe": null
+    }
+  },
+  "nested_invalid": {"numeric-id": 123, "from": "far away"},
+  "optional_items": [1, 2, "3", "4", null, 5, 6, null]
+}`;
