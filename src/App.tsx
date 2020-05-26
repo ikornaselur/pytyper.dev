@@ -52,8 +52,6 @@ const App = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showImports, setShowImports] = useState(true);
   const [forceAlternative, setForceAlternative] = useState(false);
-  const [input, setInput] = useState(EXAMPLE);
-  const [validJson, setValidJson] = useState(true);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -88,51 +86,12 @@ const App = () => {
         toggleForceAlternative={() => {
           setForceAlternative(!forceAlternative);
         }}
-        validJson={validJson}
-        prettify={() => {
-          setInput(JSON.stringify(JSON.parse(input), null, 2));
-        }}
       />
       <Container disableGutters={true} className={classes.content}>
-        <Editors
-          showImports={showImports}
-          forceAlternative={forceAlternative}
-          input={input}
-          setInput={setInput}
-          validJson={validJson}
-          setValidJson={setValidJson}
-        />
+        <Editors showImports={showImports} forceAlternative={forceAlternative} />
       </Container>
     </div>
   );
 };
 
 export default App;
-
-const EXAMPLE: string = `{
-  "number_int": 123,
-  "number_float": 3.0,
-  "string": "string",
-  "list_single_type": ["a", "b", "c"],
-  "list_mixed_type": ["1", 2, 3.0],
-  "optional_type": [1, null],
-  "nested_dict": {
-    "number": 1,
-    "string": "value",
-    "maybe": "foo"
-  },
-  "same_nested_dict": {
-    "number": 2,
-    "string": "different value",
-    "maybe": null
-  },
-  "multipe_levels": {
-    "level2": {
-      "number": 2,
-      "string": "more values",
-      "maybe": null
-    }
-  },
-  "nested_invalid": {"numeric-id": 123, "from": "far away"},
-  "optional_items": [1, 2, "3", "4", null, 5, 6, null]
-}`;
