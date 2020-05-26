@@ -2,6 +2,7 @@ import React from 'react';
 
 import {createStyles, Theme, useTheme, makeStyles} from '@material-ui/core/styles';
 import {
+  Button,
   Divider,
   Drawer,
   FormControl,
@@ -54,6 +55,8 @@ type SidebarProps = {
   toggleShowImports: () => void;
   forceAlternative: boolean;
   toggleForceAlternative: () => void;
+  validJson: boolean;
+  prettify: () => void;
 };
 
 const Sidebar = ({
@@ -63,6 +66,8 @@ const Sidebar = ({
   toggleShowImports,
   forceAlternative,
   toggleForceAlternative,
+  validJson,
+  prettify,
 }: SidebarProps) => {
   const theme = useTheme();
   const classes = useStyles(theme);
@@ -83,8 +88,10 @@ const Sidebar = ({
             label="Alternative"
           />
         </FormGroup>
+        <Button variant="contained" onClick={prettify} disabled={!validJson}>
+          Prettify JSON
+        </Button>
       </FormControl>
-      <Divider />
     </div>
   );
 
