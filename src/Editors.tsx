@@ -35,10 +35,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type EditorProps = {
   showImports: boolean;
-  showAlternative: boolean;
+  forceAlternative: boolean;
 };
 
-const Editors = ({showImports, showAlternative}: EditorProps) => {
+const Editors = ({showImports, forceAlternative}: EditorProps) => {
   const theme = useTheme();
   const classes = useStyles(theme);
 
@@ -50,7 +50,7 @@ const Editors = ({showImports, showAlternative}: EditorProps) => {
   useEffect(() => {
     if (input.length > 0) {
       try {
-        const typed = getTypeDefinitions(input, {showImports});
+        const typed = getTypeDefinitions(input, {showImports, forceAlternative});
         setAnnotations([]);
         setOutput(typed);
         setValidJson(true);
@@ -74,7 +74,7 @@ const Editors = ({showImports, showAlternative}: EditorProps) => {
       setAnnotations([]);
       setValidJson(true);
     }
-  }, [showImports, input]);
+  }, [input, forceAlternative, showImports]);
 
   return (
     <div className={classes.root}>
@@ -114,7 +114,7 @@ const Editors = ({showImports, showAlternative}: EditorProps) => {
         value={output}
         setOptions={{
           showLineNumbers: true,
-          tabSize: 2,
+          tabSize: 4,
           useWorker: false,
         }}
       />

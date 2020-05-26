@@ -52,8 +52,8 @@ type SidebarProps = {
   toggle: () => void;
   showImports: boolean;
   toggleShowImports: () => void;
-  showAlternative: boolean;
-  toggleshowAlternative: () => void;
+  forceAlternative: boolean;
+  toggleForceAlternative: () => void;
 };
 
 const Sidebar = ({
@@ -61,8 +61,8 @@ const Sidebar = ({
   toggle,
   showImports,
   toggleShowImports,
-  showAlternative,
-  toggleshowAlternative,
+  forceAlternative,
+  toggleForceAlternative,
 }: SidebarProps) => {
   const theme = useTheme();
   const classes = useStyles(theme);
@@ -79,7 +79,7 @@ const Sidebar = ({
             label="Show Imports"
           />
           <FormControlLabel
-            control={<Switch checked={showAlternative} onChange={toggleshowAlternative} />}
+            control={<Switch checked={forceAlternative} onChange={toggleForceAlternative} />}
             label="Alternative"
           />
         </FormGroup>

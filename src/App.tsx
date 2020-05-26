@@ -50,7 +50,7 @@ const App = () => {
   const classes = useStyles(theme);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showImports, setShowImports] = useState(true);
-  const [showAlternative, setshowAlternative] = useState(false);
+  const [forceAlternative, setForceAlternative] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -81,14 +81,14 @@ const App = () => {
         toggleShowImports={() => {
           setShowImports(!showImports);
         }}
-        showAlternative={showAlternative}
-        toggleshowAlternative={() => {
-          setshowAlternative(!showAlternative);
+        forceAlternative={forceAlternative}
+        toggleForceAlternative={() => {
+          setForceAlternative(!forceAlternative);
         }}
       />
       <Container disableGutters={true}>
         <div className={classes.toolbar} />
-        <Editors showImports={showImports} showAlternative={showAlternative} />
+        <Editors showImports={showImports} forceAlternative={forceAlternative} />
       </Container>
     </div>
   );
