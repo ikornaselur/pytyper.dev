@@ -34,9 +34,10 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
     },
     content: {
-      flexGrow: 1,
-      width: '100%',
-      height: '100%',
+      paddingTop: 56,
+      [theme.breakpoints.up('sm')]: {
+        paddingTop: 64,
+      },
     },
     closeMenuButton: {
       marginRight: 'auto',
@@ -86,8 +87,7 @@ const App = () => {
           setForceAlternative(!forceAlternative);
         }}
       />
-      <div className={classes.toolbar} />
-      <Container disableGutters={true}>
+      <Container disableGutters={true} className={classes.content}>
         <Editors showImports={showImports} forceAlternative={forceAlternative} />
       </Container>
     </div>
