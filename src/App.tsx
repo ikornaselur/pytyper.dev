@@ -86,8 +86,8 @@ const App = () => {
           setForceAlternative(!forceAlternative);
         }}
       />
+      <div className={classes.toolbar} />
       <Container disableGutters={true}>
-        <div className={classes.toolbar} />
         <Editors showImports={showImports} forceAlternative={forceAlternative} />
       </Container>
     </div>
