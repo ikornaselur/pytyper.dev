@@ -13,6 +13,8 @@ import {
 } from '@material-ui/core';
 import {Close} from '@material-ui/icons';
 
+import ReportModal from './ReportModal';
+
 import {drawerWidth} from './constants';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -43,6 +45,9 @@ const useStyles = makeStyles((theme: Theme) =>
     options: {
       padding: '16px 8px 0 8px',
     },
+    actions: {
+      marginTop: '10px',
+    },
   }),
 );
 
@@ -53,6 +58,7 @@ type SidebarProps = {
   toggleShowImports: () => void;
   forceAlternative: boolean;
   toggleForceAlternative: () => void;
+  submitReport: () => Promise<void>;
 };
 
 const Sidebar = ({
@@ -62,6 +68,7 @@ const Sidebar = ({
   toggleShowImports,
   forceAlternative,
   toggleForceAlternative,
+  submitReport,
 }: SidebarProps) => {
   const theme = useTheme();
   const classes = useStyles(theme);
@@ -83,6 +90,9 @@ const Sidebar = ({
           />
         </FormGroup>
       </FormControl>
+      <div className={classes.actions}>
+        <ReportModal submitReport={submitReport} />
+      </div>
     </div>
   );
 

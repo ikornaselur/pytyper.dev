@@ -57,6 +57,12 @@ const App = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const submitReport = async (): Promise<void> => {
+    console.log('Waiting...');
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    console.log('Done!');
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar} elevation={0}>
@@ -86,6 +92,7 @@ const App = () => {
         toggleForceAlternative={() => {
           setForceAlternative(!forceAlternative);
         }}
+        submitReport={submitReport}
       />
       <Container disableGutters={true} className={classes.content}>
         <Editors showImports={showImports} forceAlternative={forceAlternative} />
