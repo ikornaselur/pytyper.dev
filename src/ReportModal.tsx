@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type Props = {
-  submitReport: () => Promise<void>;
+  submitReport: () => Promise<boolean>;
 };
 
 const ReportModal = ({submitReport}: Props) => {

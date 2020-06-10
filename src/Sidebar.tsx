@@ -58,7 +58,7 @@ type SidebarProps = {
   toggleShowImports: () => void;
   forceAlternative: boolean;
   toggleForceAlternative: () => void;
-  submitReport: () => Promise<void>;
+  submitReport: () => Promise<boolean>;
 };
 
 const Sidebar = ({
