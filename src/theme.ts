@@ -1,8 +1,8 @@
 import {createMuiTheme} from '@material-ui/core/styles';
 import {red, orange, green} from '@material-ui/core/colors';
 
-const lightShade = 50;
-const mainShade = 200;
+const lightShade = 100;
+const mainShade = 300;
 const darkShade = 500;
 
 const PytyperTheme = createMuiTheme({

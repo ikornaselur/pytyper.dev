@@ -6,8 +6,9 @@ import {Menu} from '@material-ui/icons';
 
 import Editors from './Editors';
 import Sidebar from './Sidebar';
-import {drawerWidth} from './constants';
+import config from './config';
 
+const drawerWidth = 190;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -53,8 +54,29 @@ const App = () => {
   const [showImports, setShowImports] = useState(true);
   const [forceAlternative, setForceAlternative] = useState(false);
 
+  const [input, setInput] = useState(config.EXAMPLE);
+  const [output, setOutput] = useState('');
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const submitReport = async (): Promise<boolean> => {
+    const payload = {
+      json_input: input,
+      python_output: output,
+    };
+    const response = await fetch(config.REPORT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    return response.ok;
   };
 
   return (
@@ -86,9 +108,17 @@ const App = () => {
         toggleForceAlternative={() => {
           setForceAlternative(!forceAlternative);
         }}
+        submitReport={submitReport}
       />
       <Container disableGutters={true} className={classes.content}>
-        <Editors showImports={showImports} forceAlternative={forceAlternative} />
+        <Editors
+          showImports={showImports}
+          forceAlternative={forceAlternative}
+          input={input}
+          setInput={setInput}
+          output={output}
+          setOutput={setOutput}
+        />
       </Container>
     </div>
   );
