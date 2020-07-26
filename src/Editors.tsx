@@ -55,11 +55,16 @@ const Editors = ({
 
   const [validJson, setValidJson] = useState(true);
   const [annotations, setAnnotations] = useState([] as IAnnotation[]);
+  const [nameMap, setNameMap] = useState({
+    Root: 'Djamm',
+    Foo: 'Bar',
+  });
 
   useEffect(() => {
     if (input.length > 0) {
       try {
-        const typed = getTypeDefinitions(input, {showImports, forceAlternative});
+        console.log('Getting types');
+        const typed = getTypeDefinitions(input, {showImports, forceAlternative, nameMap});
         setAnnotations([]);
         setOutput(typed);
         setValidJson(true);
@@ -83,7 +88,7 @@ const Editors = ({
       setAnnotations([]);
       setValidJson(true);
     }
-  }, [input, setOutput, forceAlternative, showImports]);
+  }, [input, nameMap, setOutput, setAnnotations, setValidJson, forceAlternative, showImports]);
 
   return (
     <div className={classes.root}>

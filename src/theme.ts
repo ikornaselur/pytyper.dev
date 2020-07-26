@@ -1,5 +1,5 @@
 import {createMuiTheme} from '@material-ui/core/styles';
-import {red, orange, green} from '@material-ui/core/colors';
+import {red, orange, green, cyan, grey} from '@material-ui/core/colors';
 
 const lightShade = 100;
 const mainShade = 300;
@@ -8,10 +8,14 @@ const darkShade = 500;
 const PytyperTheme = createMuiTheme({
   palette: {
     primary: {
-      main: '#e8e8e8',
+      light: grey[lightShade],
+      main: grey[mainShade],
+      dark: grey[darkShade],
     },
     secondary: {
-      main: '#00acc1',
+      light: cyan[lightShade],
+      main: cyan[mainShade],
+      dark: cyan[darkShade],
     },
     success: {
       light: green[lightShade],

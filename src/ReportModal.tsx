@@ -48,7 +48,7 @@ type Props = {
   submitReport: () => Promise<boolean>;
 };
 
-const ReportModal = ({submitReport}: Props) => {
+const ReportModal = ({submitReport}: Props): JSX.Element => {
   const theme = useTheme();
   const classes = useStyles(theme);
   const [open, setOpen] = useState(false);
