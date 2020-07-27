@@ -10,7 +10,7 @@ SyntaxHighlighter.registerLanguage('python', python);
 const green = 'rgb(30 99 12)';
 const purple = 'rgb(176 39 193)';
 const red = 'rgb(195 71 67)';
-const blue = 'rgb(58 48 218)';
+const blue = 'rgb(13 3 177)';
 
 const useStyles = makeStyles(() =>
   createStyles({
