@@ -14,6 +14,7 @@ import {
 import {Close} from '@material-ui/icons';
 
 import ReportModal from './ReportModal';
+import NameMapModal from './NameMapModal';
 
 import {drawerWidth} from './constants';
 
@@ -47,6 +48,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     actions: {
       marginTop: '10px',
+      '& button': {
+        marginBottom: '10px',
+      },
     },
   }),
 );
@@ -91,6 +95,7 @@ const Sidebar = ({
         </FormGroup>
       </FormControl>
       <div className={classes.actions}>
+        <NameMapModal />
         <ReportModal submitReport={submitReport} />
       </div>
     </div>
